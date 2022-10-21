@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Trivia from "./components/Trivia";
 
 const data = [
@@ -91,23 +91,33 @@ const moneyPyramid = [
 ].reverse();
 
 
+
 function App() {
     const [questionNumber, setQuestionNumber] = useState(1)
-    const [timeOut, setTimeOut] = useState(false)
+    const [stop, setStop] = useState(false);
+    const [earned, setEarned] = useState('$ 0');
+
+    useEffect(()=>{
+        questionNumber >1 && setEarned(moneyPyramid.find((m)=>m.id === questionNumber-1).amount)
+    },[moneyPyramid,questionNumber])
   return (
     <div className='app'>
       <div className='main'>
+          {stop?( <h1 className='earntext'>You earned: {earned} </h1>) : (
+              <>
           <div className='top'>
               <div className='timer'>30</div>
           </div>
           <div className='bottom'>
               <Trivia
                   data={data}
-                  setTimeOut={setTimeOut}
+                  setStop={setStop}
                   setQuestionNumber={setQuestionNumber}
                   questionNumber={questionNumber}
               />
           </div>
+          </>
+              )}
       </div>
       <div className='pyramid'>
           <ul className='moneyList'>

@@ -1,9 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import '../App.css';
 
-const Trivia = ({data,setTimeOut,setQuestionNumber,questionNumber}) => {
+const Trivia = ({data,setStop,setQuestionNumber,questionNumber}) => {
+
     const [question, setQuestion]= useState(null);
-useEffect(()=>{
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [className, setClassName] = useState('answer')
+
+    const delay = (duration, callback) => {
+setTimeout(()=>{
+    callback();
+}, duration)
+    };
+
+    const handleClick = (a) => {
+        setSelectedAnswer(a);
+        setClassName('answer active');
+        delay(3000, ()=>setClassName(a.correct ? 'answer correct' : 'answer error'))
+       delay(6000, ()=>{
+           if(a.correct){
+               setQuestionNumber(prev => prev+1);
+               setSelectedAnswer(null)
+           }else {
+               setStop(true)
+           }
+       })
+    }
+
+    useEffect(()=>{
     setQuestion(data[questionNumber-1])
 },[data,questionNumber])
 
@@ -12,7 +36,7 @@ useEffect(()=>{
                 <div className='question'>{question?.question}</div>
             <div className='answers'>
                     {question?.answers.map(a=>
-                        <div className='answer'>{a.text}</div>)}
+                        <div className={selectedAnswer === a? className : 'answer' } onClick={()=>handleClick(a)}>{a.text}</div>)}
                 </div>
                 </div>
     );
