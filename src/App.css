@@ -134,3 +134,19 @@
     right: 0;
     margin: auto;
 }
+.start{
+    width: 250px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.startButton{}
+.startInput{}
+

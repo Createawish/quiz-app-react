@@ -10,7 +10,8 @@ const Trivia = ({data,setStop,setQuestionNumber,questionNumber}) => {
 
     const [question, setQuestion]= useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
-    const [className, setClassName] = useState('answer')
+    const [className, setClassName] = useState('answer');
+
     const [letsPlay] = useSound(play);
     const [correctAnswer] = useSound(correct);
     const [letsWait] = useSound(wait);
@@ -39,6 +40,7 @@ setTimeout(()=>{
                    setSelectedAnswer(null);
                });
            }else {
+               errorAnswer()
                delay(1000,()=> {
                    setStop(true)
                })
